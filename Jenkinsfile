@@ -6,10 +6,23 @@ pipeline {
 		disableConcurrentBuilds()
 		buildDiscarder(logRotator(numToKeepStr: '10'))
 	}
+	parameters {
+		booleanParam(name: 'cleanBuild', defaultValue: false, description: 'Force rebuild of build environment')
+	}
 	stages {
+		stage('Build build environment') {
+			steps {
+				script {
+					if(params.cleanBuild) {
+						sh(script:"docker rmi bs-compile:buster")
+					}
+				}
+				sh(script:"docker image ls bs-compile:buster | grep bs-compile || docker build -t bs-compile:buster netmore")
+			}
+		}
 		stage('Compile') {
 			steps {
-				sh(script:"./build-docker-start.sh")
+				sh(script:"docker run --rm -v $PWD:/basicstation bs-compile:buster /bin/bash -c 'cd /basicstation; rm -fr build-local build-rpi-std; make platform=rpi variant=std'")
 			}
 		}
 	}
