@@ -4,7 +4,8 @@ ENV TERM=xterm LC_ALL=en_US LANGUAGE=en_US LANG=en_US.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-        apt-get install --no-install-recommends -y locales language-pack-en build-essential make git file gcc wget && \
+        apt-get install --no-install-recommends -y locales language-pack-en build-essential make git file gcc wget ca-certificates && \
+        update-ca-certificates && \
         locale-gen $LANGUAGE $LANG
 
 # toolchain
