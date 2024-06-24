@@ -2,12 +2,14 @@ FROM ubuntu:24.04
 
 ENV TERM=xterm LC_ALL=en_US LANGUAGE=en_US LANG=en_US.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PATH=/root/toolchain-rpi:$PATH
+ENV PATH=/root/toolchain-rpi/arm-linux-gnueabihf/bin:$PATH
 
 RUN apt-get update && \
         apt-get install --no-install-recommends -y locales language-pack-en build-essential make git file gcc wget ca-certificates && \
         update-ca-certificates && \
         locale-gen $LANGUAGE $LANG
+
+
 
 # toolchain
 # ADD "https://sourceforge.net/projects/raspberry-pi-cross-compilers/files/Raspberry%20Pi%20GCC%20Cross-Compiler%20Toolchains/Buster/GCC%2010.3.0/Raspberry%20Pi%203A%2B%2C%203B%2B%2C%204/cross-gcc-10.3.0-pi_3%2B.tar.gz/download" /opt
