@@ -2,7 +2,7 @@ FROM ubuntu:24.04
 
 ENV TERM=xterm LC_ALL=en_US LANGUAGE=en_US LANG=en_US.UTF-8
 ENV DEBIAN_FRONTEND=noninteractive
-ENV PATH=/root/toolchain-rpi/arm-linux-gnueabihf/bin:$PATH
+ENV PATH=/root/toolchain-rpi/bin:$PATH
 
 RUN apt-get update && \
         apt-get install --no-install-recommends -y locales language-pack-en build-essential make git file gcc wget ca-certificates && \
