@@ -24,7 +24,7 @@ pipeline {
 		}
 		stage('Compile') {
 			steps {
-				sh(script:"docker run --rm -v ${env.WORKSPACE}:/basicstation bs-compile:buster /bin/bash -c 'cd /basicstation; rm -fr build-local build-rpi-std; make platform=rpi variant=std'")
+				sh(script:"docker run --rm -v ${env.WORKSPACE}:/basicstation bs-compile:buster /bin/bash -c 'cd /basicstation; rm -fr build-local; rm -fr build-rpi-std; make clean; make platform=rpi variant=std'")
 			}
 		}
 	}
