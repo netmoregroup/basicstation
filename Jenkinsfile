@@ -10,12 +10,22 @@ pipeline {
 		booleanParam(name: 'cleanBuild', defaultValue: false, description: 'Force rebuild of build environment')
 	}
 	stages {
+		stage('Clean Workspace') {
+            steps {
+                script {
+                    if(params.cleanBuild) {
+                        // Deletes the current workspace entirely
+                        deleteDir()
+                        // Checkout the repository after cleaning, if needed
+                        checkout scm
+                    }
+                }
+            }
+        }
 		stage('Build build environment') {
 			steps {
 				script {
 					if(params.cleanBuild) {
-						// Clean the workspace before starting the build
-                        cleanWs()
 						sh(script:"docker rmi bs-compile:buster || true")
 						sh(script:"docker build -t bs-compile:buster --no-cache netmore")
 					} else {
