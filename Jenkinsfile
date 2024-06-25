@@ -10,18 +10,6 @@ pipeline {
 		booleanParam(name: 'cleanBuild', defaultValue: false, description: 'Force rebuild of build environment')
 	}
 	stages {
-		stage('Clean Workspace') {
-            steps {
-                script {
-                    if(params.cleanBuild) {
-                        // Deletes the current workspace entirely
-                        deleteDir()
-                        // Checkout the repository after cleaning, if needed
-                        checkout scm
-                    }
-                }
-            }
-        }
 		stage('Build build environment') {
 			steps {
 				script {
