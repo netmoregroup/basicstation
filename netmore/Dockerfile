@@ -1,9 +1,10 @@
 FROM resin/rpi-raspbian:jessie
 
-ENV DEBIAN_FRONTEND=noninteractive
+# ENV TERM=xterm LC_ALL=en_US LANGUAGE=en_US LANG=en_US.UTF-8
+# ENV DEBIAN_FRONTEND=noninteractive
 
 # Add the legacy Raspbian repository to the sources.list file
-RUN echo "deb http://legacy.raspbian.org/raspbian jessie main contrib rpi" > /etc/apt/sources.list
+RUN echo "deb http://legacy.raspbian.org/raspbian jessie main contrib non-free rpi" > /etc/apt/sources.list
 
 # Install dependencies
 RUN apt-get update && \
