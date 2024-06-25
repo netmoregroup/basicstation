@@ -14,6 +14,8 @@ pipeline {
 			steps {
 				script {
 					if(params.cleanBuild) {
+						// Clean the workspace before starting the build
+                        cleanWs()
 						sh(script:"docker rmi bs-compile:buster || true")
 						sh(script:"docker build -t bs-compile:buster --no-cache netmore")
 					} else {
