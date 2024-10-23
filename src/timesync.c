@@ -99,6 +99,14 @@ static int         syncQual_thres;  // current threshold
 // Fwd decl
 static void onTimesyncLns (tmr_t* tmr);
 
+int ts_IsTimeSynced() {
+    if( abs(syncQual[0]) > syncQual_thres ) {
+        return 1;
+    }
+
+    return 0;
+}
+
 
 static void timesyncReport (int force) {
     ustime_t now = rt_getTime();

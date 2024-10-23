@@ -50,6 +50,8 @@ void     ts_setTimesyncLns (ustime_t xtime, sL_t gpstime);
 void     ts_processTimesyncLns (ustime_t txtime, ustime_t rxtime, sL_t servertime);
 void     ts_iniTimesync ();
 
+int      ts_IsTimeSynced();
+
 // ------------------------------
 // Used by RAL impl only
 sL_t ts_xticks2xtime (u4_t xticks, sL_t last_xtime);
