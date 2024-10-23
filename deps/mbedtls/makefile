@@ -40,7 +40,7 @@ ${MBEDINC}:
 	@mkdir -p $@
 
 ${PLT}/library/%.a: ${PLT}/Makefile
-	${MAKE} -C ${PLT} lib CC="${CC}" AR="${AR}" LD="${LD}" CFLAGS="-Wall -std=gnu11"
+	${MAKE} -C ${PLT} lib CC="${CC}" AR="${AR}" LD="${LD}" CFLAGS="-O0 -Wall -std=gnu11"
 
 ${TD}/${BD}/lib/%.a: ${PLT}/library/%.a
 	@mkdir -p ${@D}

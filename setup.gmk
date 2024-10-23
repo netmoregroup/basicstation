@@ -46,6 +46,9 @@ ARCH.linuxpico = x86_64-linux-gnu
 ARCH.corecell  = arm-linux-gnueabihf
 ARCH.rpi     = arm-linux-gnueabihf
 ARCH.kerlink = arm-klk-linux-gnueabi
+ARCH.cloudcell = arm-linux-gnueabihf
+#ARCH.everynetV2 = armv5l-linux-musleabi
+ARCH.everynetV2 = arm-bigrobot-linux-gnueabi
 ARCH=${ARCH.${platform}}
 
 export TDfull := $(shell cd ${TD} && pwd)
@@ -103,6 +106,8 @@ CFG.linuxV2 = linux lgw2 no_leds lgw2genkey
 CFG.corecell = linux lgw1 no_leds sx1302
 CFG.rpi     = linux lgw1 no_leds
 CFG.kerlink = linux lgw1 no_leds
+CFG.cloudcell = linux lgw1 no_leds ubx
+CFG.everynetV2 = linux lgw1 no_leds ubx
 
 SD.default = src-linux
 
@@ -113,6 +118,8 @@ DEPS.linuxpico = mbedtls smtcpico
 DEPS.linuxV2 = mbedtls lgw2
 DEPS.corecell = mbedtls lgw1302
 DEPS.rpi     = mbedtls lgw
+DEPS.cloudcell     = mbedtls lgw
+DEPS.everynetV2     = mbedtls lgw
 
 DEPS = $(or ${DEPS.${platform}}, ${DEPS.default})
 
@@ -135,7 +142,9 @@ CFLAGS.linux.testsim  = -g -O0 --coverage
 CFLAGS.linux.testms   = -g -O0 --coverage
 CFLAGS.linux.testfs   = -g -O0 --coverage
 CFLAGS.linux.testpin  = -g -O3
-CFLAGS.linux.std      = -g -O3
+CFLAGS.linux.std      = -ggdb3 -O0
+CFLAGS.linux.debug = -ggdb3 -O0
+CFLAGS.everynetV2.debug = -mcpu=arm926ej-s -O0 
 
 LIBS.linux   = -llgw   ${MBEDLIBS}      -lpthread
 LIBS.linuxV2 = -llgw2  ${MBEDLIBS} -lrt -lpthread -lspi
@@ -143,6 +152,8 @@ LIBS.linuxpico = -llgw ${MBEDLIBS}      -lpthread
 LIBS.corecell = -llgw1302  ${MBEDLIBS}      -lpthread -lrt
 LIBS.rpi     = -llgw   ${MBEDLIBS}      -lpthread
 LIBS.kerlink = -llgw   ${MBEDLIBS} -lrt -lpthread
+LIBS.cloudcell   = -llgw   ${MBEDLIBS}      -lpthread
+LIBS.everynetV2   = -llgw   ${MBEDLIBS}      -lpthread
 
 xCFG     =     ${CFG.${ARCH}}     ${CFG.${platform}}     ${CFG.${variant}}    ${CFG.${platform}.${variant}}
 xCFLAGS  =  ${CFLAGS.${ARCH}}  ${CFLAGS.${platform}}  ${CFLAGS.${variant}} ${CFLAGS.${platform}.${variant}}
