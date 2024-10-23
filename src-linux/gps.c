@@ -609,6 +609,9 @@ int sys_getLatLon (double* lat, double* lon) {
     return 1;
 }
 
+int sys_getLastQuality() {
+    return last_quality;
+}
 
 //
 // NOTE: Reading NMEA sentences from a GPS device is not used to sync time in any way.
