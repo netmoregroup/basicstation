@@ -48,6 +48,25 @@ str_t const SUFFIX2CT[] = {
 };
 
 
+#define STATE_FILE "/var/run/app.state"
+
+static void update_state_file()
+{
+    int state = sys_getLastQuality();
+    LOG(MOD_SYS|INFO, "[update_state_file] update state\n");
+
+    FILE * pFile;
+    pFile = fopen(STATE_FILE, "w");
+    if (pFile == NULL) {
+        LOG(MOD_SYS|ERROR, "[update_state_file] cannot open %s\n", STATE_FILE);
+        exit(EXIT_FAILURE);
+    }
+
+    fprintf(pFile, "gps=%d\n", state > 0 ? 1 : 0);
+    fclose(pFile);    
+}
+
+
 // --------------------------------------------------------------------------------
 //
 // HTTP parsing stuff
@@ -589,6 +608,9 @@ static void ws_connected_r (aio_t* aio) {
         memcpy(wbuf.buf, p, plen);
         aio_set_wrfn(conn->aio, ws_connected_w);
         LOG(MOD_AIO|XDEBUG, "[%d|WS] > PONG", conn->netctx.fd);
+        
+        // update state file
+        update_state_file();
         break;
     }
     case WSHDR_PONG: {
